@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/marlenepostop/MLOps/src/model/mlruns/0/986569bf4e2d4fda8b8b888131c8a119/artifacts
+end_time: 1748035024639
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 986569bf4e2d4fda8b8b888131c8a119
+run_name: sedate-gnu-842
+run_uuid: 986569bf4e2d4fda8b8b888131c8a119
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748035019357
+status: 3
+tags: []
+user_id: marlenepostop
