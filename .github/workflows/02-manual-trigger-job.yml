@@ -8,17 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check out repo
-      uses: actions/checkout@v3
-    - name: List files in repo root
-      run: ls -la
-    - name: List files in src folder
-      run: ls -la src
+      uses: actions/checkout@main
     - name: Install az ml extension
       run: az extension add -n ml -y
-    - name: Show Azure CLI version
-      run: az version
-    - name: Show  installed Azure ML extension
-      run: az extension show --name ml
     - name: Azure login
       uses: azure/login@v1
       with:
