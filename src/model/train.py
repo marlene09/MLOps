@@ -1,16 +1,5 @@
 # Import libraries
 
-# import glob
-# import os
-
-# import pandas as pd
-
-# from sklearn.linear_model import LogisticRegression
-# from sklearn.model_selection import train_test_split
-# from sklearn.metrics import accuracy_score
-# import mlflow
-# import mlflow.sklearn
-#import libraries
 import os
 import pandas as pd
 import glob
@@ -18,7 +7,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 import mlflow
-import mlflow.sklearn
 import argparse
 import logging
 
@@ -26,7 +14,6 @@ logging.basicConfig(level=logging.INFO)
 
 def main(args):
     """Main function to train and evaluate the logistic regression model."""
-    import mlflow.sklearn
 
     mlflow.sklearn.autolog()
     df = get_csvs_df(args.training_data)
