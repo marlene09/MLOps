@@ -8,12 +8,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check out repo
-      uses: actions/checkout@main
+      uses: actions/checkout@v3
+    - name: List files in repo root
+      run: ls -la
+    - name: List files in src folder
+      run: ls -la src
     - name: Install az ml extension
       run: az extension add -n ml -y
+    - name: Check az ml version
+      run: az ml version
     - name: Azure login
       uses: azure/login@v1
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
-
-
+    - name: Submit Azure ML job
+      run: |
+        echo "Starting job submission"
+        az ml job create --file src/job.yml --resource-group ucbtme2-rg --workspace-name MLops_learning --debug
+        echo "Job submission completed"
