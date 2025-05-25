@@ -21,7 +21,8 @@ ignore =
     F,
     N,
     C,
-    I
+    I,
+    E
 max-line-length = 200
 exclude = 
     .tox,
