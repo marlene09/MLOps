@@ -15,8 +15,10 @@ jobs:
       run: ls -la src
     - name: Install az ml extension
       run: az extension add -n ml -y
-    - name: Check az ml version
-      run: az ml version
+    - name: Show Azure CLI version
+      run: az version
+    - name: Show  installed Azure ML extension
+      run: az extension show --name ml
     - name: Azure login
       uses: azure/login@v1
       with:
