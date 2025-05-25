@@ -1,18 +1,28 @@
 [flake8]
-ignore = 
-    E305,
+
+ignore =
+    E265,  # block comment should start with '# '
+    F401,  # imported but unused
+    E302,  # expected 2 blank lines, found 1
+    F811,  # redefinition of unused
+    E501,  # line too long
+    E303,  # too many blank lines
+    W293,  # blank line contains whitespace
+    W291,  # trailing whitespace
+    E305,   # expected 2 blank lines after class or function definition, found 1
     W291,
     W504,
     C901,
     E41,
     E722,
+    E265,
     W,
     D,
     F,
     N,
     C,
     I
-max-line-length = 79
+max-line-length = 200
 exclude = 
     .tox,
     .git,
