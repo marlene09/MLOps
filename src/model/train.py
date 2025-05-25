@@ -12,9 +12,9 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
+
 def main(args):
     """Main function to train and evaluate the logistic regression model."""
-
     mlflow.sklearn.autolog()
     df = get_csvs_df(args.training_data)
     x_train, x_test, y_train, y_test = split_data(df)
@@ -23,6 +23,7 @@ def main(args):
     evaluate_model(model, x_test, y_test)
 
 # First write a function to read csv files from a folder and concatenate them  then write main
+
 
 def get_csvs_df(path):
     """Load and concatenate all CSV files from the specified directory into a single DataFrame.
@@ -39,16 +40,17 @@ def get_csvs_df(path):
     """
     # Check if the provided path exists
     if not os.path.exists(path):
-        raise RuntimeError(f"Cannot use non-existent path provided: {path}")  # Raise error if path doesn't exist
+        # Raise error if path doesn't exist
+        raise RuntimeError(f"Cannot use non-existent path provided: {path}")
 
     # Find all CSV files in the specified directory
     csv_files = glob.glob(f"{path}/*.csv")
     if not csv_files:
-        raise RuntimeError(f"No CSV files found in provided data path: {path}")  # Raise error if no CSVs found
+        # Raise error if no CSVs found
+        raise RuntimeError(f"No CSV files found in provided data path: {path}")
 
     # Read and concatenate all CSV files into a single DataFrame
     return pd.concat((pd.read_csv(f) for f in csv_files), sort=False)
-
 
 
 # Next split the data into X [independent variables] and y [dependent variable], in this case diabetes
@@ -57,7 +59,7 @@ def get_csvs_df(path):
 # TO DO: add function to split data
 def split_data(df):
     """Split the input DataFrame into independent variables (X) and dependent variables(y) for training.
-    
+
     The function separates the 'Diabetic' column as the dependent variable,
     and drops 'PatientID' and 'Diabetic' from the independent variable set.
 
@@ -66,14 +68,15 @@ def split_data(df):
 
     Returns:
         tuple: X_train, X_test, y_train, y_test arrays after splitting.
-    
+
     Raises:
         RuntimeError: If the expected 'Diabetic' column is not found in the DataFrame.
     """
     df = df.astype({col: 'float64' for col in df.select_dtypes('int').columns})
 
     if 'Diabetic' not in df.columns:
-        raise RuntimeError("Expected target column 'Diabetic' not found in data.")
+        raise RuntimeError(
+            "Expected target column 'Diabetic' not found in data.")
     X = df.drop(['PatientID', 'Diabetic'], axis=1)
     y = df['Diabetic']
     return train_test_split(X, y, test_size=0.3, random_state=0)
@@ -108,7 +111,7 @@ def evaluate_model(model, x_test, y_test):
     Returns:
         float: Accuracy score of the model on test data.
     """
-    predictions = model.predict(x_test)          # predictions for x 
+    predictions = model.predict(x_test)          # predictions for x
     accuracy = accuracy_score(y_test, predictions)  # check with ground truth
     logging.info("Model accuracy: %.4f", accuracy)
 
@@ -131,6 +134,7 @@ def parse_args():
 
     # return args
     return args
+
 
 # # run script
 if __name__ == "__main__":
