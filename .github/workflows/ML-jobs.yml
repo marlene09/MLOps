@@ -1,0 +1,25 @@
+name: runs training in development and production environment
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
+    - name: Install az ml extension
+      run: az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: Submit Azure ML job
+      run: |
+        echo "Starting job submission"
+        az ml job create --file src/job.yml --resource-group ucbtme2-rg --workspace-name MLops_learning --debug
+        echo "Job submission completed"
