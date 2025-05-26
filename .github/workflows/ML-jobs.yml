@@ -29,7 +29,7 @@ jobs:
         set -e
         STATUS=""
         while [[ "$STATUS" != "Completed" && "$STATUS" != "Failed" && "$STATUS" != "Canceled" ]]; do
-          STATUS=$(az ml job show --name ${{ steps.submit.outputs.job_id }} --query status -o tsv)
+          STATUS=$(az ml job show --name ${{ steps.submit.outputs.job_id }} --resource-group ucbtme2-rg --workspace-name MLops_learning --query status -o tsv)
           echo "Job status: $STATUS"
           sleep 10  # adjust as needed
         done
