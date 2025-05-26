@@ -19,7 +19,42 @@ jobs:
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: Submit Azure ML job
+      id: submit
+      run: |
+        JOB_ID=$(az ml job create --file src/job.yml --resource-group ucbtme2-rg --workspace-name MLops_learning  --query name -o tsv )
+        echo "job_id=$JOB_ID" >> $GITHUB_OUTPUT
+
+    - name: Wait for job to complete
+      run: |
+        set -e
+        STATUS=""
+        while [[ "$STATUS" != "Completed" && "$STATUS" != "Failed" && "$STATUS" != "Canceled" ]]; do
+          STATUS=$(az ml job show --name ${{ steps.submit.outputs.job_id }} --query status -o tsv)
+          echo "Job status: $STATUS"
+          sleep 10  # adjust as needed
+        done
+        if [[ "$STATUS" != "Completed" ]]; then
+          echo "Azure ML job failed with status: $STATUS"
+          exit 1
+        fi
+
+  
+  train-prod:
+    needs: [train]
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
+    - name: Install az ml extension
+      run: az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: Submit Azure ML job
       run: |
         echo "Starting job submission"
-        az ml job create --file src/job.yml --resource-group ucbtme2-rg --workspace-name MLops_learning --debug
+        az ml job create --file src/job_prod.yml --resource-group ucbtme2-rg --workspace-name MLops_learning --debug
         echo "Job submission completed"
+
