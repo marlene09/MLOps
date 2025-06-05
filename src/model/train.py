@@ -9,6 +9,7 @@ from sklearn.metrics import accuracy_score
 import mlflow
 import argparse
 import logging
+import joblib
 
 logging.basicConfig(level=logging.INFO)
 
@@ -117,6 +118,9 @@ def evaluate_model(model, x_test, y_test):
 
     # print(f"Model accuracy: {accuracy:.4f}")
     return accuracy
+
+
+
 
 
 def parse_args():

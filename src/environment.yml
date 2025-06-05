@@ -1,0 +1,10 @@
+name: diabetes-env
+channels:
+  - defaults
+dependencies:
+  - python=3.8
+  - scikit-learn
+  - pip
+  - pip:
+    - azureml-defaults
+    - mlflow

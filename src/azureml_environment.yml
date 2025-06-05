@@ -1,0 +1,5 @@
+$schema: https://azuremlschemas.azureedge.net/latest/environment.schema.json
+name: diabetes-env
+version: 1
+image: mcr.microsoft.com/azureml/base:latest
+conda_file: environment.yml
